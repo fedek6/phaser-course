@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>01 States</title>
+		<title>02 - Methods, properties and function flow</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="../bower_components/phaser/build/phaser.js"></script>
+		<script src="js/boot.js"></script>
 		<script src="js/preloader.js"></script>
 		<script src="js/menu.js"></script>
 	</head>
 	<body>
 		<script type="text/javascript">
 			var game = new Phaser.Game(800, 600);
+			game.state.add('Boot', MyGame.Boot);
 			game.state.add('Preloader', MyGame.Preloader);
 			game.state.add('Menu', MyGame.Menu);
-			game.state.start('Preloader');
+			
+			game.state.start('Boot');
 		</script>
 	</body>
 </html>
