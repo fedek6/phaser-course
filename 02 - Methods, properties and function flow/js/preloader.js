@@ -1,3 +1,8 @@
+/**
+ * Preloader state.
+ * Preload all stuff that you need for your game here.
+ */
+
 MyGame.Preloader = function(game) {
 	/**
 	 * Init vars.
@@ -20,6 +25,7 @@ MyGame.Preloader.prototype = {
 	init : function(spinner) {
 		/**
 		 * Prepare spinner for preloading purposes.
+		 * You can use an image called logo because it was preloaded in boot state.
 		 */	
 		this.spinner = this.add.sprite(game.world.centerX, game.world.centerY, 'logo');
 		this.spinner.width = 50;

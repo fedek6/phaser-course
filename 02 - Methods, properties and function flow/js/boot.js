@@ -1,3 +1,7 @@
+/**
+ * Boot state.
+ * This state is used only for preloading image nedded for preloader... 
+ */
 var MyGame = {};
 
 MyGame.Boot = function(game) {};
