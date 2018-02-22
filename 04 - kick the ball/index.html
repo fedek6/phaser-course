@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>04 - kick the ball</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../assets/style.css" media="all">
+		<script src="../assets/helpers.js"></script>
+		<script src="../bower_components/phaser/build/phaser.js"></script>
+		<!-- You need to load all your states -->
+		<script src="js/boot.js"></script>
+		<script src="js/preloader.js"></script>
+		<script src="js/stage.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var game = new Phaser.Game(800, 600,  Phaser.CANVAS);
+			
+			// and add them to game object
+			game.state.add('Boot', MyGame.Boot);
+			game.state.add('Preloader', MyGame.Preloader);
+			game.state.add('Stage', MyGame.Stage);
+			
+			// after that you can run your game
+			game.state.start('Boot');
+		</script>
+	</body>
+</html>
