@@ -28,6 +28,7 @@ MyGame.Stage = function(game) {
 	this.kick;
 
 	// Config vars
+
 	/** @var integer speedLimit */
 	this.speedLimit=80;
 
@@ -35,6 +36,8 @@ MyGame.Stage = function(game) {
 	this.startGameAfter = 3;
 
 	this.goalKeeperLimitation = 80;
+
+	this.goalKeeperSpeed = 300;
 
 	this.debug = true;
 
@@ -289,12 +292,12 @@ MyGame.Stage.prototype = {
 		if (game.input.keyboard.isDown(Phaser.Keyboard.W) && this.goalKeeper.y >= this.upperLimit )
 		{
 			console.log( 'y: ' + this.goalKeeper.y + ' limit is: ' + this.upperLimit  );
-			this.goalKeeper.body.velocity.y = -200;
+			this.goalKeeper.body.velocity.y = -this.goalKeeperSpeed;
 		}
 		else if (game.input.keyboard.isDown(Phaser.Keyboard.S) && this.goalKeeper.centerY <= this.lowerLimit )
 		{
 			console.log( 'y: ' + this.goalKeeper.y + ' limit is: ' + this.lowerLimit  );
-			this.goalKeeper.body.velocity.y = 200; 
+			this.goalKeeper.body.velocity.y = this.goalKeeperSpeed; 
 		}
 		else {
 			this.goalKeeper.body.velocity.y = 0;
