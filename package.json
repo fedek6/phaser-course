@@ -1,0 +1,23 @@
+{
+  "name": "phaser-course",
+  "version": "1.0.0",
+  "description": "Phaser course for absolute beginners. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fedek6/phaser-course.git"
+  },
+  "author": "Konrad Fedorczyk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fedek6/phaser-course/issues"
+  },
+  "homepage": "https://github.com/fedek6/phaser-course#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "socket.io": "^2.0.4"
+  }
+}
