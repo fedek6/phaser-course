@@ -59,10 +59,16 @@ MyGame.Stage = function(game) {
 };
 
 MyGame.Stage.prototype = {
+
+	init : function() {
+		// Do not pause game on loose focus
+		game.stage.disableVisibilityChange = true;
+	},
 		
 	create : function() {
 		
 		console.log( game.context );
+		Client.sendTest();
 
 		// show debug by default
 		MyGame.showDebug = this.debug;

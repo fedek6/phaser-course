@@ -1,3 +1,7 @@
+/** 
+ * Based on: http://www.dynetisgames.com/2017/03/06/how-to-make-a-multiplayer-online-game-with-phaser-socket-io-and-node-js/ 
+ */
+
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
