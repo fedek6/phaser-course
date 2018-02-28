@@ -68,7 +68,7 @@ MyGame.Stage.prototype = {
 	create : function() {
 		
 		console.log( game.context );
-		Client.sendTest();
+		Client.registerPlayer();
 
 		// show debug by default
 		MyGame.showDebug = this.debug;

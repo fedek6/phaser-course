@@ -4,7 +4,21 @@
 var Client = {};
 Client.socket = io.connect();
 
+/** 
+ * Test websocket 
+ */
 Client.sendTest = function(){
     console.log("test sent");
     Client.socket.emit('test');
 };
+
+/**
+ * Register new player
+ */
+Client.registerPlayer = function() {
+    Client.socket.emit('register');
+}
+
+Client.socket.on('hello',function(data){
+    console.log(data);
+});

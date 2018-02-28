@@ -21,3 +21,35 @@ app.get('/',function(req,res){
 server.listen(8081,function(){ // Listens to port 8081
     console.log('Listening on '+server.address().port);
 });
+
+
+server.players = 0;
+
+
+io.on('connection',function(socket){
+
+    socket.on('register',function(){
+        // add player
+        ++server.players;
+
+        console.log( "Player no. " + server.players + " has registered" );
+
+
+        socket.player = {
+            id: server.players
+        };
+
+        socket.emit( 'hello', socket.player.id );
+
+
+        socket.on('disconnect',function(){
+            --server.players;
+            io.emit('remove',socket.player.id);
+        });
+    });
+
+    socket.on('test',function(){
+        
+        console.log('test received');
+    });
+});
