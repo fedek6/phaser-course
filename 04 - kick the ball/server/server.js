@@ -42,6 +42,17 @@ io.on('connection',function(socket){
         socket.emit( 'hello', socket.player.id );
 
 
+        setTimeout( function() {
+
+            //socket.emit( 'moveBall', {px: 100, py: 100} );
+
+        }, 5000);
+
+        socket.on( 'moveBall', function(data) {
+            console.log(data);
+            socket.broadcast.emit( 'moveBall', {px: data.px, py: data.py} ); 
+        });
+
         socket.on('disconnect',function(){
             --server.players;
             io.emit('remove',socket.player.id);

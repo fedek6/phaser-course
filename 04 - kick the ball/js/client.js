@@ -21,4 +21,16 @@ Client.registerPlayer = function() {
 
 Client.socket.on('hello',function(data){
     console.log(data);
+    // console.log(MyGame);
 });
+
+Client.socket.on('moveBall', function(data) {
+    //console.log(MyGame.Stage)
+    //MyGame.Stage.moveBall(data.px, data.py);
+    
+    game.state.states['Stage'].moveBall(data.px, data.py);
+});
+
+Client.moveBall = function(px, py) {
+    Client.socket.emit( 'moveBall', {px: px, py: py} );
+}

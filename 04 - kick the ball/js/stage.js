@@ -55,7 +55,8 @@ MyGame.Stage = function(game) {
 	this.bufferLength = 3;
 
 	// keys
-    this.debugKey = null;
+	this.debugKey = null;
+	
 };
 
 MyGame.Stage.prototype = {
@@ -67,7 +68,6 @@ MyGame.Stage.prototype = {
 		
 	create : function() {
 		
-		console.log( game.context );
 		Client.registerPlayer();
 
 		// show debug by default
@@ -257,6 +257,7 @@ MyGame.Stage.prototype = {
 		// apply speed limit
 		if( (this.aimLine.length / 3) > this.speedLimit ) {
 			this.speed = 0;
+			return;
 		} else {
 			this.speed = Math.abs( this.speedLimit - (this.aimLine.length / 3) );
 		}
@@ -266,8 +267,19 @@ MyGame.Stage.prototype = {
         var px = (Math.cos(this.aimLine.angle) * this.speed);
         var py = (Math.sin(this.aimLine.angle) * this.speed);
 
-        this.dot.body.applyImpulse([ px, py ], this.dot.x, this.dot.y);
-    },
+		// this.dot.body.applyImpulse([ px, py ], this.dot.x, this.dot.y);
+		Client.moveBall(px, py);
+
+		this.moveBall(px, py);
+		
+	},
+	
+	/**
+	 * Move the ball
+	 */
+	moveBall: function(px, py) {
+		this.dot.body.applyImpulse([ px, py ], this.dot.x, this.dot.y);
+	},
 
     toggleDebug: function () {
 

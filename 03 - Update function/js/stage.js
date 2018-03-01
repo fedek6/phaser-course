@@ -7,7 +7,9 @@ MyGame.Stage = function(game) {
 	this.debugStep = 16;
 	this.velocityStep = 500;
 	this.text;
-	
+	this.playerNumber;
+
+
 	// feedback effect
 	this.b = 0;
 	this.frames = [];
