@@ -19,18 +19,33 @@ Client.registerPlayer = function() {
     Client.socket.emit('register');
 }
 
+/**
+ * Get 
+ */
+
 Client.socket.on('hello',function(data){
-    console.log(data);
+    if(data == 1) {
+        game.state.states['Stage'].setMaster(true);
+    } else {
+        game.state.states['Stage'].setMaster(false);
+    }
+    
     // console.log(MyGame);
 });
 
-Client.socket.on('moveBall', function(data) {
+
+
+/* Client.socket.on('moveBall', function(data) {
     //console.log(MyGame.Stage)
     //MyGame.Stage.moveBall(data.px, data.py);
-    
+    id(data.ball == true)
     game.state.states['Stage'].moveBall(data.px, data.py);
-});
+}); */
 
-Client.moveBall = function(px, py) {
+/* Client.moveBall = function(px, py) {
     Client.socket.emit( 'moveBall', {px: px, py: py} );
 }
+
+Client.updateBall = function() {
+
+} */

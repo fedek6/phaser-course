@@ -48,13 +48,19 @@ io.on('connection',function(socket){
 
         }, 5000);
 
-        socket.on( 'moveBall', function(data) {
+        socket.on( 'gameUpdate', function(data) {
+            /**
+             * This goes to everyone but not sender
+             */
             console.log(data);
-            socket.broadcast.emit( 'moveBall', {px: data.px, py: data.py} ); 
+            socket.broadcast.emit( 'gameUpdate', data ); 
         });
 
         socket.on('disconnect',function(){
+            // when player disconnects, must reset the game
+
             --server.players;
+            console.log("INFO: Player has left the game no. of players: " + server.players);
             io.emit('remove',socket.player.id);
         });
     });

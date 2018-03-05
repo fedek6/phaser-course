@@ -6,6 +6,9 @@ MyGame.Stage = function(game) {
 	this.velocityStep = 500;
 	this.text;
 
+	// This tells game if this instance is host of the game
+	this.master;
+
 	// Visible game objects
 	this.field;
 	this.dot;
@@ -64,11 +67,17 @@ MyGame.Stage.prototype = {
 	init : function() {
 		// Do not pause game on loose focus
 		game.stage.disableVisibilityChange = true;
+
+		Client.registerPlayer();
+
+
+		Client.socket.on('gameUpdate', function(data) {
+			game.state.states['Stage'].updateClient(data);
+		});
 	},
 		
 	create : function() {
-		
-		Client.registerPlayer();
+	
 
 		// show debug by default
 		MyGame.showDebug = this.debug;
@@ -267,19 +276,66 @@ MyGame.Stage.prototype = {
         var px = (Math.cos(this.aimLine.angle) * this.speed);
         var py = (Math.sin(this.aimLine.angle) * this.speed);
 
-		// this.dot.body.applyImpulse([ px, py ], this.dot.x, this.dot.y);
-		Client.moveBall(px, py);
-
-		this.moveBall(px, py);
-		
+		this.dot.body.applyImpulse([ px, py ], this.dot.x, this.dot.y);	
 	},
 	
+	// Online functions
+
 	/**
-	 * Move the ball
+	 * Set master
 	 */
-	moveBall: function(px, py) {
-		this.dot.body.applyImpulse([ px, py ], this.dot.x, this.dot.y);
+	setMaster: function(state) {
+		this.master = state;
+
+		if( this.master == true ) {
+			console.log( 'INFO: you are master of the game (host).' );
+		} else {
+			console.log( 'INFO: you are connected to the game (client).' );
+		}
 	},
+
+	/**
+	 * Update server
+	 */
+	updateServer: function () { 
+		var data = {};
+
+		// data.test = 'test';
+
+		if (this.master) {
+			data.dot = true;
+			data.dotX = parseFloat(this.dot.position.x).toFixed(2);
+			data.dotY = parseFloat(this.dot.position.y).toFixed(2);
+			data.dotSpeedX = parseFloat(this.dot.body.velocity.x).toFixed(2);
+			data.dotSpeedY = parseFloat(this.dot.body.velocity.y).toFixed(2);
+
+			Client.socket.emit('gameUpdate', data);
+		}
+		else {
+			data.dot = false;
+		}
+
+
+	},
+
+	/**
+	 * Update client
+	 */
+	updateClient: function (data) { 
+		// console.log(data);
+
+		if (!this.master) {
+			this.dot.position.x = parseFloat(data.dotX);
+			this.dot.position.y = parseFloat(data.dotY);
+			this.dot.body.velocity.x = parseFloat(data.dotSpeedX);
+			this.dot.body.velocity.y = parseFloat(data.dotSpeedY);
+		}
+
+	},
+
+
+
+
 
     toggleDebug: function () {
 
@@ -303,7 +359,6 @@ MyGame.Stage.prototype = {
 	},
 		
 	update: function() {
-
 		/**
 		 * Goal keeper movement
 		 */
@@ -320,11 +375,11 @@ MyGame.Stage.prototype = {
 		else {
 			this.goalKeeper.body.velocity.y = 0;
 		}
-	},
-	
-	collideCallback: function(obj1, obj2) {
 
-		
+		/**
+		 * Update other player
+		 */
+		this.updateServer();
 	},
 	
 	preRender: function() {
@@ -372,6 +427,7 @@ MyGame.Stage.prototype = {
 		var gap = getRandomInt(3, 5);
 		
 		this.game.context.fillStyle = 'rgba(0, 0, 0, 0.1)';
+
 		for (var y = 0; y < this.game.height; y += gap)
 		{
 			this.game.context.fillRect(0, y, this.game.width, 1);
